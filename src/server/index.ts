@@ -4,27 +4,42 @@ import express, { Express, Request, Response } from "express";
 import dotenv from 'dotenv';
 
 // Security
-import cors from 'cors';
-import helmet from 'helmet';
+import cors from 'cors'; // siempre habilitar el cors para poder hacer peticiones, es el encargado de habilitar quien puede hacer peticiones http
+import helmet from 'helmet'; // politica de seguridad y acciones a la hora de gestionar las peticiones 
 
 // TODO HTTPS
 
 //Root Routerss
-import routes from '../routes';
-
-// Configuration the .env file
-
-dotenv.config();
+import rootRuter from '../routes';
 
 // Create Express APP
 
 const server : Express =  express();
 
-const port : string | number = process.env.PORT || 8000;
-
 // Define SERVER to use "/api" and use rootRouter from 'index.ts' in routes
 // Fron this point onover: hhtp://localhost:8000/api/...
-server.use('/api', rootRouter);
+server.use('/api', rootRuter);
+
+// TODO Mongose Connection
+
+// Security Config
+
+server.use(helmet());
+server.use(cors());
+
+// Content Type Config :
+server.use(express.urlencoded({ extended: true, limit:'50mb' }))
+server.use(express.json({limit: '50mb'}))
+
+// * Redirection Config
+//http://localhost:8000/ --> http://localhost:8000/api/
+
+server.get('/', (req:Request, res:Response) => {
+    res.redirect('/api');
+});
+
+export default server;
+
 
 
 

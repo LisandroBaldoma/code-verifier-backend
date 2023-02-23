@@ -5,7 +5,7 @@
 
     import express, { Request, Response } from 'express';
     import  helloRouter  from './HelloRouter';
-    import { LogInfo } from '@/utils/loggers';
+    import { LogInfo } from '../utils/loggers';
 
 
 // Server instance
