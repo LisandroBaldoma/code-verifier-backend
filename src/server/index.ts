@@ -20,6 +20,9 @@ const server : Express =  express();
 // Fron this point onover: hhtp://localhost:8000/api/...
 server.use('/api', rootRuter);
 
+// Static server
+server.use(express.static('public'))
+
 // TODO Mongose Connection
 
 // Security Config
